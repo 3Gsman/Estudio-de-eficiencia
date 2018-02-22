@@ -70,13 +70,28 @@ public class Alg {
     
     //BUSQUEDA SECUANCIAL:
     
+    public static boolean busquedaSecuencial(int[] lista, int x ){
+		int i = 0;
+    	while (lista[i]!=x){
+    		i++;
+    	if (lista[i]==x){
+    		return true;
+    	}else{
+    		return false;
+    	}
+    	
+    	}
+		return false;
+    	
+    	
+    }
+    
     /*
 	 * --NSET CODE HERE--
      */
     //BUSQUEDA BINARIA:
     
-    public boolean busquedaBinaria(int[] lista,
-            int inicio, int fin, int x) {
+    public boolean busquedaBinaria(int[] lista, int inicio, int fin, int x) {
         int mitad;
         if (inicio > fin) {
             return false;
@@ -94,7 +109,14 @@ public class Alg {
 
     public static void main(String[] args) {
        
-    	System.out.print("papa");
+    	System.out.println("papa");
+    	
+    	int[] lista = {5,7,3,1,4,9,2};
+    	
+    	
+    	System.out.println(busquedaSecuencial(lista,8));
+    	
+    	
 
     }
 
