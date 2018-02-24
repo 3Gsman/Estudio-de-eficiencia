@@ -110,12 +110,27 @@ public class Alg {
     public static void main(String[] args) {
        
     	System.out.println("papa");
-    	
     	int[] lista = {5,7,3,1,4,9,2};
-    	
-    	
     	System.out.println(busquedaSecuencial(lista,8));
-    	
+        int t1 = 5000;
+        int t2 = 7500;
+        int t3 = 10000;
+        int t4 = 15000;
+        
+        int[] array;
+        for(int i = 0 ; i<=100;i++){
+            array = new int[t1];
+            for(int j = 0; j<=t1;j++){
+            int elemento = (int)Math.round(Math.random()*10000);
+            array[i]=elemento;
+            }
+        }
+        
+         long start = System.nanoTime();
+       ///haces algo
+         long end = System.nanoTime();
+         long resta = end-start;
+         System.out.println("Tiempo " + resta);
     	
 
     }
