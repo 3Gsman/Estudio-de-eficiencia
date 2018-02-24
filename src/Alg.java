@@ -1,4 +1,6 @@
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class Alg {
 
@@ -6,11 +8,11 @@ public class Alg {
 	
     //MERGE SORT:
 	
-    public static void mergesort(int[] numbers, int low, int high) {
+    public static void mergeSort(int[] numbers, int low, int high) {
         if (low < high) {
             int middle = low + (high - low) / 2;
-            mergesort(numbers, low, middle);
-            mergesort(numbers, middle + 1, high);
+            mergeSort(numbers, low, middle);
+            mergeSort(numbers, middle + 1, high);
             merge(numbers, low, middle, high);
         }
     }
@@ -69,29 +71,23 @@ public class Alg {
     //BUSQUEDAS:
     
     //BUSQUEDA SECUANCIAL:
-    
     public static boolean busquedaSecuencial(int[] lista, int x ){
 		int i = 0;
-    	while (lista[i]!=x){
-    		i++;
-    	if (lista[i]==x){
+    	while (lista[i]!=x && i < lista.length -1){
+    		i++; 
+    	}
+    	if (i < lista.length - 1){
+    		return true;
+    	}else if (x == lista[lista.length-1]){
     		return true;
     	}else{
     		return false;
     	}
-    	
-    	}
-		return false;
-    	
-    	
     }
-    
-    /*
-	 * --NSET CODE HERE--
-     */
+
     //BUSQUEDA BINARIA:
     
-    public boolean busquedaBinaria(int[] lista, int inicio, int fin, int x) {
+    public static boolean busquedaBinaria(int[] lista, int inicio, int fin, int x) {
         int mitad;
         if (inicio > fin) {
             return false;
@@ -107,8 +103,53 @@ public class Alg {
         }
     }
 
+    public static void algTests (){
+    	int[] listaMerge = {5,7,8,1,4,9,6,2};
+    	int[] listaQuick = {5,7,8,1,4,9,6,2};
+    	int[] listaSec = {5,7,8,1,4,9,6,2};
+    	int[] listaBin = {1,2,4,5,6,7,8,9};
+    	
+    	System.out.println("");
+    	System.out.println("TESTS: ");
+    	System.out.println("");
+    	
+    	System.out.println("MERGESORT: ");
+    	mergeSort(listaMerge,0,listaMerge.length-1);
+    	System.out.println("Array ordenado: ");
+    	for(int i = 0; i < listaMerge.length;i++){
+    		System.out.print(listaMerge[i]);
+    	}
+    	System.out.println("");
+    	System.out.println("");
+    	
+    	System.out.println("QUICKSORT: ");
+    	mergeSort(listaQuick,0,listaQuick.length-1);
+    	System.out.println("Array ordenado: ");
+    	for(int i = 0; i < listaQuick.length;i++){
+    		System.out.print(listaQuick[i]);
+    	}
+    	System.out.println("");
+    	System.out.println("");
+    	
+    	System.out.println("BUSQUEDA SECUENCIAL: ");
+    	System.out.println("Busco el 2 (esta en la ultima posicion) " + busquedaSecuencial(listaSec,2)); 
+    	System.out.println("Busco el 4 (esta en la lista) " + busquedaSecuencial(listaSec,4));
+    	System.out.println("Busco el 3 (no esta en la lista) " + busquedaSecuencial(listaSec,3));
+    	System.out.println("");
+    	System.out.println("BUSQUEDA BINARIA: ");
+    	System.out.println("Busco el 9 (esta en la ultima posicion) " + busquedaBinaria(listaBin,0,listaBin.length-1,2)); 
+    	System.out.println("Busco el 4 (esta en la lista) " + busquedaBinaria(listaBin,0,listaBin.length-1,4));
+    	System.out.println("Busco el 3 (no esta en la lista) " + busquedaBinaria(listaBin,0,listaBin.length-1,3));
+    }
+    
+    
+    
     public static void main(String[] args) {
-        int t1 = 5000;
+       
+    	algTests();
+    	
+    	
+    	int t1 = 5000;
         int t2 = 7500;
         int t3 = 10000;
         int t4 = 15000;
@@ -126,7 +167,7 @@ public class Alg {
             System.out.println("Memoria libre 1 (bytes): " + 
             	memL1);
             long start = System.nanoTime();
-            mergesort(array,0,array.length-1);
+            mergeSort(array,0,array.length-1);
             long end = System.nanoTime();
             long resta = end-start;
             long memL2 = Runtime.getRuntime().freeMemory();
@@ -137,6 +178,25 @@ public class Alg {
             
         }
 
-    }
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new File("NewData.csv"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        StringBuilder builder = new StringBuilder();
+        String ColumnNamesList = "Intento,Tiempo";
+        // No need give the headers Like: id, Name on builder.append
+        builder.append(ColumnNamesList +"\n");
+        builder.append(2 +",");
+        builder.append(544214);
+        builder.append('\n');
+        builder.append(2 +",");
+        builder.append(246872);
+        pw.write(builder.toString());
+        pw.close();
+        System.out.println("done!");
+        
+	}
 
 }
