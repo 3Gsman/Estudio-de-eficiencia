@@ -169,7 +169,7 @@ public class Alg {
             e.printStackTrace();
         }
         StringBuilder builder = new StringBuilder();
-        String ColumnNamesList = "Intento,Tiempo";
+        String ColumnNamesList = "Intento,Tiempo,Memoria";
         builder.append(ColumnNamesList +"\n");
         
         for(int i = 0 ; i<100;i++){
@@ -185,7 +185,7 @@ public class Alg {
             System.out.println("Memoria libre 1 (bytes): " + 
             	memL1);
             long start = System.nanoTime();
-            quickSort(array,0,array.length-1);
+            mergeSort(array,0,array.length-1);
             long end = System.nanoTime();
             long resta = end-start;
             long memL2 = Runtime.getRuntime().freeMemory();
@@ -196,7 +196,8 @@ public class Alg {
             
             //builder.append(ColumnNamesList +"\n");
             builder.append(i+1 +",");
-            builder.append(resta);
+            builder.append(resta+",");
+            builder.append(Math.abs(memL1 -memL2));
             builder.append('\n');
         }
         
