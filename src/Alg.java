@@ -153,7 +153,7 @@ public class Alg {
         
         PrintWriter pw = null;
         try {
-            pw = new PrintWriter(new File("NewData.csv"));
+            pw = new PrintWriter(new File("MergeSortData.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -192,7 +192,7 @@ public class Alg {
         
         pw.write(builder.toString());
         pw.close();
-        System.out.println("done!");
+        System.out.println("MergeSort done!");
     }
     
     public static void tiempoQuick (int t){
@@ -200,17 +200,18 @@ public class Alg {
         
         PrintWriter pw = null;
         try {
-            pw = new PrintWriter(new File("NewData.csv"));
+            pw = new PrintWriter(new File("QuickSortData.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         StringBuilder builder = new StringBuilder();
-        String ColumnNamesList = "Intento,Tiempo,Memoria";
+        String ColumnNamesList = "Intento,Tiempo(ns),Memoria(bytes)";
         builder.append(ColumnNamesList +"\n");
         
         for(int i = 0 ; i<100;i++){
             array = new int[t];
             
+            long memL1 = Runtime.getRuntime().freeMemory(); // AQUI
             for(int j = 0; j<t;j++){
             int elemento = (int)Math.round(Math.random()*10000);
             array[i]=elemento;
@@ -221,14 +222,14 @@ public class Alg {
             quickSort(array,0,array.length-1);
             long end = System.nanoTime();
             long resta = end-start;
-            long memL2 = Runtime.getRuntime().freeMemory();
-            System.out.println("Memoria utilizada " + Math.abs(memL2));
+            long memL2 = Runtime.getRuntime().freeMemory(); //AQUI
+            System.out.println("Memoria utilizada " + Math.abs(memL2-memL1)); //AQUI
             System.out.println("Tiempo " + resta + "\n");
             
             //builder.append(ColumnNamesList +"\n");
             builder.append(i+1 +",");
             builder.append(resta+",");
-            builder.append(Math.abs(memL2));
+            builder.append(Math.abs(memL2-memL1));
             builder.append('\n');
         }
         
@@ -242,12 +243,12 @@ public class Alg {
         
         PrintWriter pw = null;
         try {
-            pw = new PrintWriter(new File("NewData.csv"));
+            pw = new PrintWriter(new File("BinarySearchData.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         StringBuilder builder = new StringBuilder();
-        String ColumnNamesList = "Intento,Tiempo,Memoria";
+        String ColumnNamesList = "Intento,Tiempo(ns)";
         builder.append(ColumnNamesList +"\n");
         
         for(int i = 0 ; i<100;i++){
@@ -258,6 +259,8 @@ public class Alg {
             array[i]=elemento;
             }
             
+            quickSort(array,0,array.length-1);
+            
             System.out.println("Array numero: " + i );
             long start = System.nanoTime();
             busquedaBinaria(array,0,array.length-1,(int)Math.round(Math.random()*10000));
@@ -267,7 +270,7 @@ public class Alg {
             
             //builder.append(ColumnNamesList +"\n");
             builder.append(i+1 +",");
-            builder.append(resta+",");
+            builder.append(resta);
             builder.append('\n');
         }
         
@@ -281,12 +284,12 @@ public class Alg {
         
         PrintWriter pw = null;
         try {
-            pw = new PrintWriter(new File("NewData.csv"));
+            pw = new PrintWriter(new File("BusquedaSecuancialData.csv"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         StringBuilder builder = new StringBuilder();
-        String ColumnNamesList = "Intento,Tiempo,Memoria";
+        String ColumnNamesList = "Intento,Tiempo(ns)";
         builder.append(ColumnNamesList +"\n");
         
         for(int i = 0 ; i<100;i++){
@@ -307,7 +310,7 @@ public class Alg {
             
             //builder.append(ColumnNamesList +"\n");
             builder.append(i+1 +",");
-            builder.append(resta+",");
+            builder.append(resta);
             builder.append('\n');
         }
         
@@ -321,8 +324,16 @@ public class Alg {
     public static void main(String[] args) {
        
     	//algTests();
-    	tiempoQuick(5000);
     	
+    	int tamano = 13000;
+    	
+    	tiempoQuick(tamano);
+    	System.out.println("___________________________________________________________________________");
+    	tiempoMerge(tamano);
+    	System.out.println("___________________________________________________________________________");
+    	tiempoBinary(tamano);
+    	System.out.println("___________________________________________________________________________");
+    	tiempoSecuencial(tamano);
 
 
     }
