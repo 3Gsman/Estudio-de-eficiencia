@@ -60,12 +60,18 @@ public class Alg {
             if (numbers[j] <= pivot) {
                 i++;
                 if (i != j) {
-                  //  ejemplo.exchange(numbers, i, j);
+                    exchange(numbers, i, j);
                 }
             }
         }
-     //  ejemplo.exchange(numbers, low, i);
+        exchange(numbers, low, i);
         return i;
+    }
+    
+    private static void exchange(int[] numbers,int i, int j) {
+        int temp = numbers[i];
+        numbers[i] = numbers[j];
+        numbers[j] = temp;
     }
 
     //BUSQUEDAS:
@@ -146,7 +152,7 @@ public class Alg {
     
     public static void main(String[] args) {
        
-    	algTests();
+    	//algTests();
     	
     	
     	int t1 = 5000;
@@ -155,29 +161,7 @@ public class Alg {
         int t4 = 15000;
         
         int[] array;
-
-        for(int i = 0 ; i<100;i++){
-            array = new int[t1];
-            for(int j = 0; j<t1;j++){
-            int elemento = (int)Math.round(Math.random()*10000);
-            array[i]=elemento;
-            }
-            System.out.println("Array numero: " + i );
-            long memL1 = Runtime.getRuntime().freeMemory();
-            System.out.println("Memoria libre 1 (bytes): " + 
-            	memL1);
-            long start = System.nanoTime();
-            mergeSort(array,0,array.length-1);
-            long end = System.nanoTime();
-            long resta = end-start;
-            long memL2 = Runtime.getRuntime().freeMemory();
-            System.out.println("Memoria libre 2 (bytes): " + 
-            		memL2);
-            System.out.println("Memoria utilizada " + (memL1 -memL2));
-            System.out.println("Tiempo " + resta + "\n");
-            
-        }
-
+        
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(new File("NewData.csv"));
@@ -186,13 +170,36 @@ public class Alg {
         }
         StringBuilder builder = new StringBuilder();
         String ColumnNamesList = "Intento,Tiempo";
-        // No need give the headers Like: id, Name on builder.append
         builder.append(ColumnNamesList +"\n");
-        builder.append(2 +",");
-        builder.append(544214);
-        builder.append('\n');
-        builder.append(2 +",");
-        builder.append(246872);
+        
+        for(int i = 0 ; i<100;i++){
+            array = new int[t1];
+            
+            for(int j = 0; j<t1;j++){
+            int elemento = (int)Math.round(Math.random()*10000);
+            array[i]=elemento;
+            }
+            
+            System.out.println("Array numero: " + i );
+            long memL1 = Runtime.getRuntime().freeMemory();
+            System.out.println("Memoria libre 1 (bytes): " + 
+            	memL1);
+            long start = System.nanoTime();
+            quickSort(array,0,array.length-1);
+            long end = System.nanoTime();
+            long resta = end-start;
+            long memL2 = Runtime.getRuntime().freeMemory();
+            System.out.println("Memoria libre 2 (bytes): " + 
+            		memL2);
+            System.out.println("Memoria utilizada " + Math.abs(memL1 -memL2));
+            System.out.println("Tiempo " + resta + "\n");
+            
+            //builder.append(ColumnNamesList +"\n");
+            builder.append(i+1 +",");
+            builder.append(resta);
+            builder.append('\n');
+        }
+        
         pw.write(builder.toString());
         pw.close();
         System.out.println("done!");
