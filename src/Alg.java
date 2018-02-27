@@ -148,18 +148,7 @@ public class Alg {
     	System.out.println("Busco el 3 (no esta en la lista) " + busquedaBinaria(listaBin,0,listaBin.length-1,3));
     }
     
-    
-    
-    public static void main(String[] args) {
-       
-    	//algTests();
-    	
-    	
-    	int t1 = 5000;
-        int t2 = 7500;
-        int t3 = 10000;
-        int t4 = 15000;
-        
+    public static void tiempoMerge (int t){
         int[] array;
         
         PrintWriter pw = null;
@@ -173,9 +162,9 @@ public class Alg {
         builder.append(ColumnNamesList +"\n");
         
         for(int i = 0 ; i<100;i++){
-            array = new int[t1];
+            array = new int[t];
             
-            for(int j = 0; j<t1;j++){
+            for(int j = 0; j<t;j++){
             int elemento = (int)Math.round(Math.random()*10000);
             array[i]=elemento;
             }
@@ -204,7 +193,137 @@ public class Alg {
         pw.write(builder.toString());
         pw.close();
         System.out.println("done!");
+    }
+    
+    public static void tiempoQuick (int t){
+        int[] array;
         
-	}
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new File("NewData.csv"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        StringBuilder builder = new StringBuilder();
+        String ColumnNamesList = "Intento,Tiempo,Memoria";
+        builder.append(ColumnNamesList +"\n");
+        
+        for(int i = 0 ; i<100;i++){
+            array = new int[t];
+            
+            for(int j = 0; j<t;j++){
+            int elemento = (int)Math.round(Math.random()*10000);
+            array[i]=elemento;
+            }
+            
+            System.out.println("Array numero: " + i );
+            long start = System.nanoTime();
+            quickSort(array,0,array.length-1);
+            long end = System.nanoTime();
+            long resta = end-start;
+            long memL2 = Runtime.getRuntime().freeMemory();
+            System.out.println("Memoria utilizada " + Math.abs(memL2));
+            System.out.println("Tiempo " + resta + "\n");
+            
+            //builder.append(ColumnNamesList +"\n");
+            builder.append(i+1 +",");
+            builder.append(resta+",");
+            builder.append(Math.abs(memL2));
+            builder.append('\n');
+        }
+        
+        pw.write(builder.toString());
+        pw.close();
+        System.out.println("done!");
+    }
+    
+    public static void tiempoBinary(int t){
+        int[] array;
+        
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new File("NewData.csv"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        StringBuilder builder = new StringBuilder();
+        String ColumnNamesList = "Intento,Tiempo,Memoria";
+        builder.append(ColumnNamesList +"\n");
+        
+        for(int i = 0 ; i<100;i++){
+            array = new int[t];
+            
+            for(int j = 0; j<t;j++){
+            int elemento = (int)Math.round(Math.random()*10000);
+            array[i]=elemento;
+            }
+            
+            System.out.println("Array numero: " + i );
+            long start = System.nanoTime();
+            busquedaBinaria(array,0,array.length-1,(int)Math.round(Math.random()*10000));
+            long end = System.nanoTime();
+            long resta = end-start;
+            System.out.println("Tiempo " + resta + "\n");
+            
+            //builder.append(ColumnNamesList +"\n");
+            builder.append(i+1 +",");
+            builder.append(resta+",");
+            builder.append('\n');
+        }
+        
+        pw.write(builder.toString());
+        pw.close();
+        System.out.println("done!");
+    }
+    
+    public static void tiempoSecuencial(int t){
+    int[] array;
+        
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new File("NewData.csv"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        StringBuilder builder = new StringBuilder();
+        String ColumnNamesList = "Intento,Tiempo,Memoria";
+        builder.append(ColumnNamesList +"\n");
+        
+        for(int i = 0 ; i<100;i++){
+            array = new int[t];
+            
+            for(int j = 0; j<t;j++){
+            int elemento = (int)Math.round(Math.random()*10000);
+            array[i]=elemento;
+            }
+            
+            System.out.println("Array numero: " + i );
+            
+            long start = System.nanoTime();
+            busquedaSecuencial(array,(int)Math.round(Math.random()*10000));
+            long end = System.nanoTime();
+            long resta = end-start;
+            System.out.println("Tiempo " + resta + "\n");
+            
+            //builder.append(ColumnNamesList +"\n");
+            builder.append(i+1 +",");
+            builder.append(resta+",");
+            builder.append('\n');
+        }
+        
+        pw.write(builder.toString());
+        pw.close();
+        System.out.println("done!");
+    }
+    
 
+    
+    public static void main(String[] args) {
+       
+    	//algTests();
+    	tiempoQuick(5000);
+    	
+
+
+    }
 }
