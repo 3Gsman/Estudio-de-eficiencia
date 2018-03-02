@@ -18,7 +18,8 @@ public class Alg {
     }
 
     private static void merge(int[] numbers, int low, int middle, int high) {
-        int l = numbers.length;
+    	long memL1 = Runtime.getRuntime().freeMemory();
+    	int l = numbers.length;
         int[] helper = new int[l];
         for (int i = low; i <= high; i++) {
             helper[i] = numbers[i];
@@ -41,6 +42,7 @@ public class Alg {
             k++;
             i++;
         }
+        long memL2 = Runtime.getRuntime().freeMemory(); 
     }
 
     //QUICK SORT:
@@ -170,16 +172,18 @@ public class Alg {
             }
             
             System.out.println("Array numero: " + i );
-            long memL1 = Runtime.getRuntime().freeMemory();
-            System.out.println("Memoria libre 1 (bytes): " + 
-            	memL1);
+         
+           // System.out.println("Memoria libre 1 (bytes): " + 
+            //	memL1);
             long start = System.nanoTime();
+            long memL1 = Runtime.getRuntime().freeMemory();
             mergeSort(array,0,array.length-1);
+            long memL2 = Runtime.getRuntime().freeMemory();
             long end = System.nanoTime();
             long resta = end-start;
-            long memL2 = Runtime.getRuntime().freeMemory();
-            System.out.println("Memoria libre 2 (bytes): " + 
-            		memL2);
+         
+            //System.out.println("Memoria libre 2 (bytes): " + 
+            //		memL2);
             System.out.println("Memoria utilizada " + Math.abs(memL1 -memL2));
             System.out.println("Tiempo " + resta + "\n");
             
@@ -325,7 +329,7 @@ public class Alg {
        
     	//algTests();
     	
-    	int tamano = 13000;
+    	int tamano = 12500;
     	
     	tiempoQuick(tamano);
     	System.out.println("___________________________________________________________________________");
